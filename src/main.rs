@@ -1,9 +1,13 @@
+mod player;
+
 use bevy::{prelude::*, window::PrimaryWindow};
+use player::PlayerPlugin;
 
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .add_startup_system(spawn_camera)
+        .add_plugin(PlayerPlugin)
         .run();
 }
 
