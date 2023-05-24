@@ -4,7 +4,6 @@ use super::components::Player;
 use bevy::prelude::*;
 
 pub const PLAYER_SPEED: f32 = 500.0;
-// pub const PLAYER_SIZE: f32 = 64.0;
 
 pub fn spawn_player(
     mut commands: Commands,
