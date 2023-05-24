@@ -1,23 +1,30 @@
+use crate::animation::{AnimationTimer, AnimationIndices};
+
 use super::components::Player;
 use bevy::prelude::*;
-use bevy::window::PrimaryWindow;
 
 pub const PLAYER_SPEED: f32 = 500.0;
 // pub const PLAYER_SIZE: f32 = 64.0;
 
 pub fn spawn_player(
     mut commands: Commands,
-    window_query: Query<&Window, With<PrimaryWindow>>,
     asset_server: Res<AssetServer>,
+    mut texture_atlases: ResMut<Assets<TextureAtlas>>,
 ) {
-    let window = window_query.get_single().unwrap();
-
+    let texture_handle = asset_server.load("sprites/chars/gabe-idle-run.png");
+    let texture_atlas =
+        TextureAtlas::from_grid(texture_handle, Vec2::new(24.0, 24.0), 7, 1, None, None);
+    let texture_atlas_handle = texture_atlases.add(texture_atlas);
+    let animation_indices = AnimationIndices { first: 1, last: 6 };
     commands.spawn((
-        SpriteBundle {
-            transform: Transform::from_xyz(window.width() / 2.0, window.height() / 2.0, 0.0),
-            texture: asset_server.load("sprites/ball_blue_large.png"),
+        SpriteSheetBundle {
+            texture_atlas: texture_atlas_handle,
+            sprite: TextureAtlasSprite::new(animation_indices.first),
+            transform: Transform::from_scale(Vec3::splat(6.0)),
             ..default()
         },
+        animation_indices,
+        AnimationTimer(Timer::from_seconds(0.1, TimerMode::Repeating)),
         Player {},
     ));
 }

@@ -1,5 +1,7 @@
 mod player;
+mod animation;
 
+use animation::animate_sprite;
 use bevy::{prelude::*, window::PrimaryWindow};
 use player::PlayerPlugin;
 
@@ -7,6 +9,7 @@ fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .add_startup_system(spawn_camera)
+        .add_system(animate_sprite)
         .add_plugin(PlayerPlugin)
         .run();
 }

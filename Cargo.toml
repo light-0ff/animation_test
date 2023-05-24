@@ -3,6 +3,9 @@ name = "animation_test"
 version = "0.1.0"
 edition = "2021"
 
+[workspace]
+resolver = "2" # Important! wgpu/Bevy needs this!
+
 # Enable a small amount of optimization in debug mode
 [profile.dev]
 opt-level = 1
@@ -14,4 +17,4 @@ opt-level = 3
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy = "0.10.0"
+bevy = "0.10.1"
