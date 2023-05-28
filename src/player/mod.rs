@@ -1,25 +1,26 @@
+use bevy::prelude::*;
+
 mod components;
+mod resources;
 mod systems;
 
-use bevy::prelude::*;
+use resources::*;
 use systems::*;
 
-#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
-pub struct MovementSystemSet;
-
-#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
-pub struct ConfinementSystemSet;
 
 pub struct PlayerPlugin;
 
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
         app
-            // Configure System Sets
-            .configure_set(MovementSystemSet.before(ConfinementSystemSet))
-            // Startup Systems
-            .add_startup_system(spawn_player)
+            // On Enter State
             // Systems
-            .add_system(player_movement.in_set(MovementSystemSet));
+            .add_startup_system(spawn_player)
+            .add_system(move_player)
+            .add_system(change_player_animation)
+            .init_resource::<PlayerAnimations>()
+            .add_system(player_fall)
+            .add_system(player_jump)
+            ;
     }
 }

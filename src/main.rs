@@ -1,8 +1,9 @@
+use bevy::prelude::*;
+
 mod animation;
 mod player;
 
 use animation::animate_sprite;
-use bevy::prelude::*;
 use player::PlayerPlugin;
 
 fn main() {
